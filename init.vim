@@ -18,8 +18,8 @@ filetype plugin indent on
 call plug#begin()
 
 function! UpdateRemotePlugins(...)
-let &rtp = &rtp
-UpdateRemotePlugins
+    let &rtp = &rtp
+    UpdateRemotePlugins
 endfunction
 
 " Themes
@@ -63,16 +63,21 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 
 nnoremap :n<CR> :nohl<CR>
 
+" Navigation shortcuts
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gn <Plug>(coc-rename)
 
+" Use return to accept code completion
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use tab/shift tab to cycle through completion options
 inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#next(1) : CheckBackspace() ? "\<Tab>" : coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" Control + space to retrigger completion 
 inoremap <silent><expr> <C-space> coc#refresh()
+" K to show documentation for a symbol in floating window
 nnoremap <silent> K :call ShowDocumentation()
 
 function! CheckBackspace() abort
@@ -88,6 +93,7 @@ function! ShowDocumentation()
     endif
 endfunction
 
+" Highlight all occurances of the same symbol under the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 lua <<EOF
